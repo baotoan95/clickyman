@@ -1,0 +1,17 @@
+app:
+  security:
+    secret: Clickyman
+    exprireIn: 3000
+    jwtRefreshExpireTimeInMs: 5000
+    encryptionKey: Clickyman1234567
+    initVector: Clickyman1234567
+    publicKey: ! '-----BEGIN PUBLIC KEY-----
+			MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuqe7Cpim4x/F6xN9NHcb
+			pwCpIBnr/I+HEdK6iHlwu0QKF1W7mlx/8dBHt/FF5f4kIDK/wn8pVz2bpiGFIrZz
+			f6leD4Lk8WkrtrdvYhuKws0vwsg/a7S9+kWDqtHZYMu5/5/XAqvkedr++SziP0xs
+			wfEBJY7oQVjDxiY5/jATas1B+SGzyaHr2ySyZkRjVLRDSpndpXHkKL0hUNNMeC1y
+			CHaBWYevaG7DCgfX7y72KU2BR4JQE7CZMqzsbSDUsJzON767ODIE801F+NaNLyL9
+			A7VYpUr4zvwzLfYtzUX67QRq/SgqOLRQGZAQykkZcSZDA4pcaS+DtCbVTiD+yROM
+			FQIDAQAB
+			-----END PUBLIC KEY-----'
+    

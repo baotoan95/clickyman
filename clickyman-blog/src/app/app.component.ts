@@ -15,6 +15,7 @@ export class AppComponent {
     this.http.get('http://www.mocky.io/v2/5d29fb823000006c005a40ca?mocky-delay=100ms')
       .subscribe(data => {
         console.log(data);
+        throw Error("Hehe")
       })
   }
 }

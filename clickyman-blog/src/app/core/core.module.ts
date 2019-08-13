@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { LoaderService } from './services/loader.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { HttpService } from './services/http.service';
 import { LocalStorageService } from './services/localstorage.service';
+import { GlobalErrorHandler } from './services/error.service';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,11 @@ import { LocalStorageService } from './services/localstorage.service';
             multi: true
         },
         HttpService,
-        LocalStorageService
+        LocalStorageService,
+        {
+            provide: ErrorHandler,
+            useClass: GlobalErrorHandler
+        }
     ],
     exports: [
         LoaderComponent
