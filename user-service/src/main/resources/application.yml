@@ -1,0 +1,34 @@
+app:
+  security:
+    publicKey: -----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwoMVfbNC2RGuubwHb6jHccya/UwomaLyPOD0JLJ04lVpB2CjHRG4EXO1uJgEiyhzS1z8Ot4rB/ivoiTSRtvOQBIt3QogXUZKssYY4DE7qLCTw3cVoK8KUKNXzsQPd9KiPGid4QxWiNo2Oevz3YiJJMYKJpc9fOwRu2o6O+9vK+jr4V4KN0khwSTPa/N5EQ0cZu1AyHuObxETlwtzrgU9QwXiQKHyuSzw89saMUlZf1KUx+2EQTnyiFC4VUqroHG8g/JPX3WmskYzbCwLNrtSuTCw7Ix8Rn641t+BvkKrNLiHJ4I4DClx1G7L17aL3VAP+j/Y+qsWxIyHVMMnLe1ofwIDAQAB-----END PUBLIC KEY-----
+    
+spring:
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  datasource:
+    username: postgres
+    password: root
+    url: jdbc:postgresql://localhost:5432/postgres
+    platform: postgres
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
+      
+  activemq:
+    broker-url: tcp://localhost:61616
+    non-blocking-redelivery: true
+    packages:
+      trust-all: true
+    
+#  jms:
+#    pub-sub-domain: true
+    
+server:
+  port: 8000

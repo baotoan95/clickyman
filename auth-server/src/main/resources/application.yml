@@ -1,0 +1,43 @@
+app:
+  security:
+    secret: Clickyman
+    exprireIn: 3000
+    jwtRefreshExpireTimeInMs: 5000
+    encryptionKey: Clickyman1234567
+    initVector: Clickyman1234567
+spring:
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  datasource:
+    username: postgres 
+    password: root
+    url: jdbc:postgresql://localhost:5432/postgres
+    platform: postgres
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
+      
+  activemq:
+    broker-url: tcp://localhost:61616
+    non-blocking-redelivery: true
+    packages:
+      trust-all: true
+    
+#  jms:
+#    pub-sub-domain: true
+
+logging:
+  level:
+    com:
+      clickyman: DEBUG
+      
+server:
+  port: 9000
+    
