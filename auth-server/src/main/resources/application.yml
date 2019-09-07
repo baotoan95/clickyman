@@ -5,6 +5,7 @@ app:
     jwtRefreshExpireTimeInMs: 5000
     encryptionKey: Clickyman1234567
     initVector: Clickyman1234567
+      
 spring:
   jpa:
     database: POSTGRESQL
@@ -16,7 +17,7 @@ spring:
           lob:
             non_contextual_creation: true
   datasource:
-    username: postgres 
+    username: postgres
     password: root
     url: jdbc:postgresql://localhost:5432/postgres
     platform: postgres
@@ -29,7 +30,7 @@ spring:
     non-blocking-redelivery: true
     packages:
       trust-all: true
-    
+
 #  jms:
 #    pub-sub-domain: true
 

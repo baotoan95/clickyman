@@ -20,6 +20,8 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
+import com.clickyman.services.UserService;
+
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
@@ -37,6 +39,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	
 	@Autowired
 	private DataSource dataSource;
+	@Autowired
+	private UserService userService;
 	
 	@Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
@@ -50,7 +54,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		endpoints
 		.authenticationManager(authenticationManager)
 		.tokenStore(tokenStore())
-		.accessTokenConverter(accessTokenConverter());
+		.accessTokenConverter(accessTokenConverter())
+		.userDetailsService(userService);
 	}
 	
 	@Override

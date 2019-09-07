@@ -25,7 +25,9 @@ public class UserController {
 	@GetMapping
 	@PreAuthorize("#oauth2.hasAnyScope('read')")
 	public List<UserDto> findAll() {
-		Type listUserType = new TypeToken<List<UserDto>>() {}.getType();
+		Type listUserType = new TypeToken<List<UserDto>>() {
+		}.getType();
 		return modelMapper.map(this.userRepository.findAll(), listUserType);
 	}
+
 }
