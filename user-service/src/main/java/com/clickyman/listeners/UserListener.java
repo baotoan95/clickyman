@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
-import com.clickyman.constant.UserContant;
+import com.clickyman.constant.QueueName;
 import com.clickyman.dto.UserDto;
 import com.clickyman.dto.UserRequest;
 import com.clickyman.services.UserService;
@@ -22,7 +22,7 @@ public class UserListener {
 	@Autowired
 	private UserService userService;
 	
-	@JmsListener(destination = UserContant.REQUEST_QUEUE_GET_USER_DETAIL)
+	@JmsListener(destination = QueueName.REQUEST_QUEUE_GET_USER_DETAIL)
 	public void fetchUserInfo(Message message, Session session) throws JMSException {
 		UserRequest.FindUserDetailByUserName req = (UserRequest.FindUserDetailByUserName) ((ActiveMQObjectMessage) message).getObject();
 		UserDto user = this.userService.findUserByUsername(req.getUsername());

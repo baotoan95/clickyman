@@ -22,7 +22,10 @@ public class UserService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
 			UserDto user = this.jmsUserService.findUserDetail(new UserRequest.FindUserDetailByUserName(username));
-			return ClickymanUser.builder().username(user.getUsername()).password(user.getPassword()).authorities(Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"))).build();
+			return ClickymanUser.builder()
+					.username(user.getUsername()).password(user.getPassword())
+					.authorities(Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN")))
+					.build();
 		} catch (Exception e) {
 			throw new UsernameNotFoundException("Username or password is incorrect");
 		}

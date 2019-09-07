@@ -1,6 +1,5 @@
 package com.clickyman.controller;
 
-import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -16,35 +15,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.clickyman.constant.ApiRoutes;
 import com.clickyman.constant.DefaultValue;
+import com.clickyman.dto.ResponseDto;
 import com.clickyman.dto.UserDto;
+import com.clickyman.exception.ClickymanException;
 import com.clickyman.services.UserService;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping(ApiRoutes.USER_API)
 public class UserController {
 	@Autowired
 	private UserService userService;
 
 	@PostMapping
 	@PreAuthorize("#oauth2.hasAnyScope('write')")
-	public UserDto createUser(@Valid @RequestBody UserDto userReq) {
-		return this.userService.createUser(userReq);
+	public ResponseDto createUser(@Valid @RequestBody UserDto userReq) throws ClickymanException {
+		return ResponseDto.build(this.userService.createUser(userReq));
 	}
 	
-	@GetMapping("/{username}")
-	public UserDto findByUsername(@PathVariable String username) {
-		return this.userService.findUserByUsername(username);
+	@GetMapping("{username}")
+	public ResponseDto findByUsername(@PathVariable String username) {
+		return ResponseDto.build(this.userService.findUserByUsername(username));
 	}
 	
 	@GetMapping
-	public List<UserDto> findAll(@RequestParam(defaultValue = DefaultValue.PAGE) int page, @RequestParam(defaultValue = DefaultValue.PAGE_SIZE) int size) {
-		return this.userService.findAllUser(page, size);
+	public ResponseDto findAll(@RequestParam(defaultValue = DefaultValue.PAGE) int page, @RequestParam(defaultValue = DefaultValue.PAGE_SIZE) int size) {
+		return ResponseDto.build(this.userService.findAllUser(page, size));
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("{id}")
 	public void delete(@PathVariable UUID id) {
 		this.userService.deleteUser(id);
+	}
+	
+	@GetMapping("checkExisting")
+	public ResponseDto checkUserExisting(@RequestParam String username, @RequestParam String email) {
+		return ResponseDto.build(this.userService.checkExistingUser(username, email));
 	}
 
 }

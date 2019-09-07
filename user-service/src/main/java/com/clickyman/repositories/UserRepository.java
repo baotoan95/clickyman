@@ -10,4 +10,5 @@ import com.clickyman.entities.UserEntity;
 @Repository
 public interface UserRepository extends PagingAndSortingRepository<UserEntity, UUID> {
 	public UserEntity findByUsername(String username);
+	public UserEntity findFirstByUsernameOrEmail(String username, String email);
 }

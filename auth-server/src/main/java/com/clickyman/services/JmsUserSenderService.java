@@ -13,7 +13,7 @@ import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
-import com.clickyman.constant.UserContant;
+import com.clickyman.constant.QueueName;
 import com.clickyman.dto.UserDto;
 import com.clickyman.dto.UserRequest;
 
@@ -30,10 +30,10 @@ public class JmsUserSenderService {
 		Session session = jmsMessagingTemplate.getConnectionFactory().createConnection().createSession(false, Session.AUTO_ACKNOWLEDGE);
 		ObjectMessage objectMessage = session.createObjectMessage(msg);
 		objectMessage.setJMSCorrelationID(UUID.randomUUID().toString());
-		objectMessage.setJMSReplyTo(new ActiveMQQueue(UserContant.REPLY_QUEUE_GET_USER_DETAIL));
+		objectMessage.setJMSReplyTo(new ActiveMQQueue(QueueName.REPLY_QUEUE_GET_USER_DETAIL));
 		objectMessage.setJMSExpiration(1000L);
 		objectMessage.setJMSDeliveryMode(DeliveryMode.NON_PERSISTENT);
 		
-		return jmsMessagingTemplate.convertSendAndReceive(new ActiveMQQueue(UserContant.REQUEST_QUEUE_GET_USER_DETAIL), objectMessage, UserDto.class);
+		return jmsMessagingTemplate.convertSendAndReceive(new ActiveMQQueue(QueueName.REQUEST_QUEUE_GET_USER_DETAIL), objectMessage, UserDto.class);
 	}
 }
