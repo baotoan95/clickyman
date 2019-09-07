@@ -11,16 +11,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @JsonInclude(Include.NON_EMPTY)
 public class ExceptionDetails implements Serializable {
 	private static final long serialVersionUID = 4324399358437014041L;
@@ -30,4 +30,11 @@ public class ExceptionDetails implements Serializable {
 	private HttpStatus status;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
 	private LocalDateTime dateTime;
+	
+	public ExceptionDetails(SystemCode systemCode, String message, HttpStatus status, LocalDateTime dateTime) {
+		this.systemCode = systemCode;
+		this.message = message;
+		this.status = status;
+		this.dateTime = dateTime;
+	}
 }
