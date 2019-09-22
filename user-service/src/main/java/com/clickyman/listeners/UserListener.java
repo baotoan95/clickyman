@@ -2,6 +2,7 @@ package com.clickyman.listeners;
 
 import java.io.IOException;
 
+import javax.jms.BytesMessage;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageProducer;
@@ -51,5 +52,13 @@ public class UserListener {
 		
 		final MessageProducer producer = session.createProducer(message.getJMSReplyTo());
         producer.send(responseMessage);
+	}
+	
+	@JmsListener(destination = "presence")
+	public void fetch(Message message) throws JMSException, IOException, ClassNotFoundException {
+		BytesMessage messageIn = (BytesMessage) message;
+		byte[] data = new byte[(int) messageIn.getBodyLength()];
+		messageIn.readBytes(data);
+	    System.out.println(new String(data));
 	}
 }

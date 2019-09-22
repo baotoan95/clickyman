@@ -6,8 +6,9 @@ import {PostService} from "./services/post.service";
 import {PassportModule} from "@nestjs/passport";
 import {JwtModule, JwtModuleOptions} from "@nestjs/jwt";
 import {JwtStrategy} from "./config/jwt.strategy";
-import {EnvironmentService} from "./services/environment.service";
-import {EnvironmentModule} from "./services/environment.module";
+import {EnvironmentService} from "./services/environment/environment.service";
+import {EnvironmentModule} from "./services/environment/environment.module";
+import {MqService} from "./services/mq.service";
 
 @Module({
 	imports: [
@@ -42,7 +43,7 @@ import {EnvironmentModule} from "./services/environment.module";
 		}),
 	],
 	controllers: [PostController],
-	providers: [PostService, JwtStrategy],
+	providers: [PostService, JwtStrategy, MqService],
 })
 export class AppModule {
 }

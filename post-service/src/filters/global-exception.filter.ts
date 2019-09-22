@@ -12,7 +12,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 
 		response.status(status).json({
 			statusCode: status,
-			dateTime: new Date().toISOString(),
+			dateTime: new Date().toLocaleString(),
 			path: request.url,
 		});
 	}
