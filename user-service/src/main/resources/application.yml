@@ -22,14 +22,11 @@ spring:
       connection-timeout: 20000
       maximum-pool-size: 5
       
-  activemq:
-    broker-url: tcp://localhost:61616
-    non-blocking-redelivery: true
-    packages:
-      trust-all: true
-    
-#  jms:
-#    pub-sub-domain: true
+  artemis:
+    host: localhost
+    port: 61616
+    user: root
+    password: root
     
 server:
   port: 8000

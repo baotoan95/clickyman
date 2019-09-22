@@ -1,5 +1,6 @@
 package com.clickyman.services;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import javax.jms.DeliveryMode;
@@ -7,7 +8,7 @@ import javax.jms.JMSException;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
 
-import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.activemq.artemis.jms.client.ActiveMQQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.jms.core.JmsTemplate;
@@ -23,17 +24,30 @@ public class JmsUserSenderService {
 	private JmsTemplate jmsTemplate;
 	@Autowired
 	private JmsMessagingTemplate jmsMessagingTemplate;
-	
-	public UserDto findUserDetail(UserRequest.FindUserDetailByUserName msg) throws JMSException {
-		this.jmsTemplate.setReceiveTimeout(1000L);
+
+	public UserDto findUserDetail(UserRequest.FindUserDetailByUserName msg) throws JMSException, IOException {
+		jmsTemplate.setReceiveTimeout(20000L);
 		jmsMessagingTemplate.setJmsTemplate(jmsTemplate);
 		Session session = jmsMessagingTemplate.getConnectionFactory().createConnection().createSession(false, Session.AUTO_ACKNOWLEDGE);
-		ObjectMessage objectMessage = session.createObjectMessage(msg);
-		objectMessage.setJMSCorrelationID(UUID.randomUUID().toString());
-		objectMessage.setJMSReplyTo(new ActiveMQQueue(QueueName.REPLY_QUEUE_GET_USER_DETAIL));
-		objectMessage.setJMSExpiration(1000L);
-		objectMessage.setJMSDeliveryMode(DeliveryMode.NON_PERSISTENT);
+
+//		BytesMessage message = session.createBytesMessage();
+//		message.setJMSCorrelationID(UUID.randomUUID().toString());
+//		message.setJMSReplyTo(new ActiveMQQueue(QueueName.REPLY_QUEUE_GET_USER_DETAIL));
+//		message.setJMSExpiration(1000L);
+//		message.setJMSDeliveryMode(DeliveryMode.NON_PERSISTENT);
+//		ByteArrayOutputStream out = new ByteArrayOutputStream();
+//		ObjectOutputStream oos = new ObjectOutputStream(out);
+//		oos.writeObject(msg);
+//		oos.flush();
+//		message.writeBytes(out.toByteArray());
+
+		ObjectMessage message = session.createObjectMessage(msg);
+		message.setJMSCorrelationID(UUID.randomUUID().toString());
+		message.setJMSReplyTo(new ActiveMQQueue(QueueName.REPLY_QUEUE_GET_USER_DETAIL));
+		message.setJMSExpiration(1000L);
+		message.setJMSDeliveryMode(DeliveryMode.NON_PERSISTENT);
 		
-		return jmsMessagingTemplate.convertSendAndReceive(new ActiveMQQueue(QueueName.REQUEST_QUEUE_GET_USER_DETAIL), objectMessage, UserDto.class);
+		return jmsMessagingTemplate.convertSendAndReceive(new ActiveMQQueue(QueueName.REQUEST_QUEUE_GET_USER_DETAIL), message, UserDto.class);
 	}
+	
 }
