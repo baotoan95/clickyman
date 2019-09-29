@@ -2,11 +2,11 @@ import {PassportStrategy} from "@nestjs/passport";
 import {ExtractJwt, Strategy} from "passport-jwt";
 import {Injectable} from "@nestjs/common";
 import {Request} from "express";
-import {EnvironmentService} from "../services/environment/environment.service";
+import {EnvironmentService} from "../modules/environment/environment.service";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-	constructor(private readonly env: EnvironmentService) {
+	constructor(public readonly env: EnvironmentService) {
 		super({
 			jwtFromRequest: ExtractJwt.fromExtractors([
 				ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -16,7 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 		});
 	}
 
-	public async validate(req: Request, payload: any): Promise<any> {
+	public async validate(_req: Request, _payload: any): Promise<any> {
 		return true;
 	}
 }

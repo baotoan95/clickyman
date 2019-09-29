@@ -6,9 +6,9 @@ import {PostService} from "./services/post.service";
 import {PassportModule} from "@nestjs/passport";
 import {JwtModule, JwtModuleOptions} from "@nestjs/jwt";
 import {JwtStrategy} from "./config/jwt.strategy";
-import {EnvironmentService} from "./services/environment/environment.service";
-import {EnvironmentModule} from "./services/environment/environment.module";
-import {MqService} from "./services/mq.service";
+import {EnvironmentService} from "./modules/environment/environment.service";
+import {EnvironmentModule} from "./modules/environment/environment.module";
+import {MqModule} from "./modules/mq/mq.module";
 
 @Module({
 	imports: [
@@ -25,6 +25,14 @@ import {MqService} from "./services/mq.service";
 					database: env.ENVIRONMENT.DB_NAME,
 					entities: [__dirname + "/**/*.entity{.ts,.js}"],
 					synchronize: true,
+					debug: true,
+					migrationsRun: false,
+					migrations: [__dirname + "/migrations/**/*{.ts,.js}"],
+					cli: {
+						// Location of migration should be inside src folder
+						// to be compiled into dist/ folder.
+						migrationsDir: "src/migrations",
+					},
 				} as TypeOrmModuleOptions;
 			},
 		}),
@@ -41,9 +49,10 @@ import {MqService} from "./services/mq.service";
 				};
 			},
 		}),
+		MqModule,
 	],
 	controllers: [PostController],
-	providers: [PostService, JwtStrategy, MqService],
+	providers: [PostService, JwtStrategy],
 })
 export class AppModule {
 }

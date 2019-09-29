@@ -1,10 +1,12 @@
 import {Column, Entity} from "typeorm";
-import {IsDate, IsOptional, IsString} from "class-validator";
+import {IsDate, IsEnum, IsOptional, IsString} from "class-validator";
 import {Type} from "class-transformer";
-import {IPost} from "../business/post";
+import {IPost, POST_ERROR_STATUS, POST_STATUS} from "../business/post";
 import {BaseEntity} from "./base.entity";
 
-@Entity("posts")
+export const POST_TABLE_NAME = "posts";
+
+@Entity(POST_TABLE_NAME)
 export class PostEntity extends BaseEntity implements IPost {
 	@Column()
 	@IsString()
@@ -14,17 +16,28 @@ export class PostEntity extends BaseEntity implements IPost {
 	@IsString()
 	public content!: string;
 
-	@Column()
+	@Column({nullable: true})
 	@IsString()
-	public thumb!: string;
+	@IsOptional()
+	public thumb?: string;
 
-	@Column()
+	@Column({nullable: true})
 	@IsString()
-	public author!: string;
+	@IsOptional()
+	public author?: string;
+
+	@Column({nullable: true})
+	@IsString()
+	@IsOptional()
+	public category?: string;
 
 	@Column({nullable: true})
 	@IsDate()
 	@Type(() => Date)
 	@IsOptional()
 	public publishedDate?: Date;
+
+	@IsEnum([POST_STATUS, POST_ERROR_STATUS])
+	@Column({nullable: true})
+	public status!: POST_STATUS | POST_ERROR_STATUS;
 }

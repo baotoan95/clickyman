@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.clickyman.common.entities.BaseEntity;
+
 import lombok.Getter;
 import lombok.Setter;
 

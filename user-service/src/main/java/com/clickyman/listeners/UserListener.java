@@ -14,16 +14,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
-import com.clickyman.constant.QueueName;
-import com.clickyman.dto.UserDto;
-import com.clickyman.dto.UserRequest;
+import com.clickyman.common.constant.QueueName;
+import com.clickyman.common.dto.PostEvent;
+import com.clickyman.common.dto.UserDto;
+import com.clickyman.common.dto.UserRequest;
 import com.clickyman.services.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Component
 public class UserListener {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ObjectMapper objectMapper;
 	
 	@JmsListener(destination = QueueName.REQUEST_QUEUE_GET_USER_DETAIL)
 	public void fetchUserInfo(Message message, Session session) throws JMSException, IOException, ClassNotFoundException {
@@ -54,11 +58,12 @@ public class UserListener {
         producer.send(responseMessage);
 	}
 	
-	@JmsListener(destination = "presence")
-	public void fetch(Message message) throws JMSException, IOException, ClassNotFoundException {
+	@JmsListener(destination = QueueName.POST_TOPIC)
+	public void postEventListener(Message message) throws JMSException, IOException, ClassNotFoundException {
 		BytesMessage messageIn = (BytesMessage) message;
 		byte[] data = new byte[(int) messageIn.getBodyLength()];
 		messageIn.readBytes(data);
-	    System.out.println(new String(data));
+	    PostEvent postEvent = objectMapper.readValue(data, PostEvent.class);
+	    this.userService.handleEvent(postEvent.getType(), postEvent.getInfo());
 	}
 }

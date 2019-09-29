@@ -5,12 +5,22 @@
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "alwaysStrict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noEmitOnError": true,
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "moduleResolution" : "node"
+    "moduleResolution" : "node",
+    "watch": true
   },
   "exclude": ["node_modules", "dist"]
 }

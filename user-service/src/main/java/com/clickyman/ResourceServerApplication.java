@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @SpringBootApplication
 @EnableJms
 public class ResourceServerApplication {
@@ -24,5 +26,10 @@ public class ResourceServerApplication {
     public BCryptPasswordEncoder bCryptEncoder() {
         return new BCryptPasswordEncoder();
     }
+	
+	@Bean
+	public ObjectMapper objectMapper() {
+		return new ObjectMapper();
+	}
 
 }

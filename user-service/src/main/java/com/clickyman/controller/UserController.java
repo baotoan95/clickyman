@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.clickyman.constant.ApiRoutes;
-import com.clickyman.constant.DefaultValue;
-import com.clickyman.dto.ResponseDto;
-import com.clickyman.dto.UserDto;
-import com.clickyman.exception.ClickymanException;
+import com.clickyman.common.constant.ApiRoutes;
+import com.clickyman.common.constant.DefaultValue;
+import com.clickyman.common.dto.ResponseDto;
+import com.clickyman.common.dto.UserDto;
+import com.clickyman.common.exception.ClickymanException;
 import com.clickyman.services.UserService;
 
 @RestController

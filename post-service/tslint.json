@@ -13,7 +13,9 @@
     "interface-name": [false],
     "arrow-parens": false,
     "object-literal-sort-keys": false,
-    "indent": [true, "tabs"]
+    "indent": [true, "tabs"],
+    "max-classes-per-file": false,
+    "variable-name": false
   },
   "rulesDirectory": []
 }

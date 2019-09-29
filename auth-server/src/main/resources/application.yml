@@ -1,4 +1,5 @@
 app:
+  debug: true
   security:
     secret: Clickyman
     exprireIn: 3000

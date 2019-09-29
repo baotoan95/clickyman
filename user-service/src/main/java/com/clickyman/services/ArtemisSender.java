@@ -3,7 +3,7 @@ package com.clickyman.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 
-import com.clickyman.constant.QueueName;
+import com.clickyman.common.constant.QueueName;
 
 public class ArtemisSender {
 	@Autowired

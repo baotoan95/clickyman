@@ -9,12 +9,12 @@ export abstract class BaseEntity {
 	@Column()
 	@Type(() => Date)
 	@IsDate()
-	public createdDate: Date;
+	public createdDate!: Date;
 
 	@Column()
 	@Type(() => Date)
 	@IsDate()
-	public updatedDate: Date;
+	public updatedDate!: Date;
 
 	@BeforeInsert()
 	protected generateDateBeforeInsert(): void {

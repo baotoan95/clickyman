@@ -9,9 +9,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.clickyman.common.dto.UserDto;
+import com.clickyman.common.dto.UserRequest;
 import com.clickyman.dto.ClickymanUser;
-import com.clickyman.dto.UserDto;
-import com.clickyman.dto.UserRequest;
 
 @Service
 public class UserService implements UserDetailsService {

@@ -8,15 +8,16 @@ import javax.jms.JMSException;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
 
-import org.apache.activemq.artemis.jms.client.ActiveMQQueue;
+import org.apache.activemq.artemis.jms.client.ActiveMQDestination;
+import org.apache.activemq.artemis.jms.client.ActiveMQDestination.TYPE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
-import com.clickyman.constant.QueueName;
-import com.clickyman.dto.UserDto;
-import com.clickyman.dto.UserRequest;
+import com.clickyman.common.constant.QueueName;
+import com.clickyman.common.dto.UserDto;
+import com.clickyman.common.dto.UserRequest;
 
 @Service
 public class JmsUserSenderService {
@@ -40,14 +41,13 @@ public class JmsUserSenderService {
 //		oos.writeObject(msg);
 //		oos.flush();
 //		message.writeBytes(out.toByteArray());
-
 		ObjectMessage message = session.createObjectMessage(msg);
 		message.setJMSCorrelationID(UUID.randomUUID().toString());
-		message.setJMSReplyTo(new ActiveMQQueue(QueueName.REPLY_QUEUE_GET_USER_DETAIL));
+		message.setJMSReplyTo(ActiveMQDestination.createDestination(QueueName.REPLY_QUEUE_GET_USER_DETAIL, TYPE.TEMP_QUEUE));
 		message.setJMSExpiration(1000L);
 		message.setJMSDeliveryMode(DeliveryMode.NON_PERSISTENT);
 		
-		return jmsMessagingTemplate.convertSendAndReceive(new ActiveMQQueue(QueueName.REQUEST_QUEUE_GET_USER_DETAIL), message, UserDto.class);
+		return jmsMessagingTemplate.convertSendAndReceive(ActiveMQDestination.createDestination(QueueName.REQUEST_QUEUE_GET_USER_DETAIL, TYPE.QUEUE), message, UserDto.class);
 	}
 	
 }
