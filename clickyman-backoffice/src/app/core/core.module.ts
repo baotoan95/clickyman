@@ -10,6 +10,9 @@ import {CommonModule} from '@angular/common';
 import {HttpService} from './services/http.service';
 import {LocalStorageService} from './services/localstorage.service';
 import {GlobalErrorHandler} from './services/error.service';
+import {AuthenticationService} from "./services/authentication.service";
+import {HttpHeaderInterceptor} from "./interceptors/http-header.interceptor";
+import {HttpErrorInterceptor} from "./interceptors/http-error.interceptor";
 
 @NgModule({
   declarations: [
@@ -28,12 +31,23 @@ import {GlobalErrorHandler} from './services/error.service';
       useClass: LoaderInterceptor,
       multi: true
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpHeaderInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    },
     HttpService,
     LocalStorageService,
     {
       provide: ErrorHandler,
       useClass: GlobalErrorHandler
-    }
+    },
+    AuthenticationService,
   ],
   exports: [
     CommonModule,

@@ -1,0 +1,39 @@
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Title</th>
+    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="author">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Author</th>
+    <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="category">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Category</th>
+    <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="publishedDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Published Date</th>
+    <td mat-cell *matCellDef="let element"> {{element.publishedDate | date: DISPLAY_DATE_FORMAT}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="createdDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date</th>
+    <td mat-cell *matCellDef="let element"> {{element.createdDate | date: DISPLAY_DATE_FORMAT}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="updatedDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Updated Date</th>
+    <td mat-cell *matCellDef="let element"> {{element.updatedDate | date: DISPLAY_DATE_FORMAT}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

@@ -1,3 +1,56 @@
-.clickyman {
+.main-container {
   height: 100vh;
+  .clickyman {
+    height: calc(100% - 64px);
+  }
+  .main-content {
+    padding: 1.5rem 1rem;
+  }
+}
+
+.main-navigation {
+  width: 250px;
+  color: #6c6c6c;
+  font-size: .875rem;
+  background-color: #F5F5F5;
+
+  .menu-item {
+    display: flex;
+    box-sizing: border-box;
+    min-height: 1rem;
+    padding: .7rem .8rem;
+    background-color: #F5F5F5;
+    cursor: pointer;
+
+    span {
+      flex-grow: 1;
+    }
+
+    .menu-dropdown-icon {
+      width: 1rem;
+      height: 1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    &:hover {
+      background-color: #888b8c;
+      color: #dddddd;
+    }
+  }
+
+  .menu-root-item {
+    padding-left: .8rem !important;
+  }
+}
+
+.main-toolbar {
+  .mat-toolbar-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .tools {
+      flex-grow: 1;
+    }
+  }
 }

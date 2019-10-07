@@ -1,52 +1,59 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import * as lodash from 'lodash';
-import { Observable } from 'rxjs';
-import { LocalStorageService } from './localstorage.service';
+import {Injectable} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import * as lodash from "lodash";
+import {Observable} from "rxjs";
+
+export const JWT_TOKEN_KEY = "jwtToken";
 
 @Injectable()
 export class HttpService {
-    req: RequestHelper;
-    _: any;
-    commonHelper: CommonHelper;
+  req: RequestHelper;
+  _: any;
+  commonHelper: CommonHelper;
 
-    constructor(
-        private _httpClient: HttpClient,
-        private localStorageService: LocalStorageService
-    ) {
-        this.req = new RequestHelper(_httpClient, localStorageService);
-        this._ = lodash;
-    }
+  constructor(
+    private httpClient: HttpClient,
+  ) {
+    this.req = new RequestHelper(httpClient);
+    this._ = lodash;
+  }
+}
+
+export interface IToken {
+  access_token: string;
+  refresh_token: string;
+  scope: string;
+  expires_in: number;
+  token_type: string;
+}
+
+export class JwtToken implements IToken {
+  public access_token: string;
+  public expires_in: number;
+  public refresh_token: string;
+  public scope!: string;
+  public token_type: string;
 }
 
 class RequestHelper {
-    xcrfToken: string;
+  constructor(private httpClient: HttpClient) {
+  }
 
-    constructor(private _httpClient: HttpClient, private localStorage: LocalStorageService) {
+  get(api: string, headers?: any): Observable<any> {
+    return this.httpClient.get(api, {headers});
+  }
 
-    }
+  post(api: string, data: any, headers?: any): Observable<any> {
+    return this.httpClient.post(api, data, {headers});
+  }
 
-    get(api: string, options?: any): Observable<any> {
-        return this._httpClient.get(api, options);
-    }
+  put(api: string, data: any, headers?: any): Observable<any> {
+    return this.httpClient.put(api, data, {headers});
+  }
 
-    post(api: string, data: any, headers?: any): Observable<any> {
-        if (!headers) { headers = {} }
-        headers['X-Csrf-Token'] = this.xcrfToken || '';
-        return this._httpClient.post(api, data, { headers: new HttpHeaders(headers) });
-    }
-
-    put(api: string, data: any, headers?: any): Observable<any> {
-        if (!headers) { headers = {} }
-        headers['X-Csrf-Token'] = this.xcrfToken || '';
-        return this._httpClient.put(api, data, { headers: new HttpHeaders(headers) });
-    }
-
-    delete(api: string, headers?: any): Observable<any> {
-        if (!headers) { headers = {} }
-        headers['X-Csrf-Token'] = this.xcrfToken || '';
-        return this._httpClient.delete(api, { headers: new HttpHeaders(headers) });
-    }
+  delete(api: string, headers?: any): Observable<any> {
+    return this.httpClient.delete(api, {headers});
+  }
 }
 
 class CommonHelper {

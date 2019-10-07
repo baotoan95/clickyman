@@ -10,8 +10,8 @@ declare const module: any;
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule, {
-		cors: false,
-		// logger: true,
+		cors: true,
+		logger: true,
 	});
 
 	app.useGlobalPipes(new ValidationPipe({

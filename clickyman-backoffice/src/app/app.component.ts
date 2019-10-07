@@ -1,84 +1,63 @@
-import {Component} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {FlatTreeControl} from '@angular/cdk/tree';
-import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material';
+import {Component} from "@angular/core";
+import {FlatTreeControl} from "@angular/cdk/tree";
+import {MatTreeFlatDataSource, MatTreeFlattener} from "@angular/material";
 
-interface FoodNode {
+interface MenuNode {
   name: string;
-  children?: FoodNode[];
+  url: string;
+  children?: MenuNode[];
 }
 
-interface ExampleFlatNode {
+interface FlatNode {
   expandable: boolean;
   name: string;
   level: number;
 }
 
-const TREE_DATA: FoodNode[] = [
+const TREE_DATA: MenuNode[] = [
   {
-    name: 'Fruit',
-    children: [
-      {name: 'Apple'},
-      {name: 'Banana'},
-      {name: 'Fruit loops'},
-    ]
-  }, {
-    name: 'Vegetables',
+    name: "Post management",
+    url: "",
     children: [
       {
-        name: 'Green',
-        children: [
-          {name: 'Broccoli'},
-          {name: 'Brussel sprouts'},
-        ]
-      }, {
-        name: 'Orange',
-        children: [
-          {name: 'Pumpkins'},
-          {name: 'Carrots'},
-        ]
+        name: "Overview",
+        url: "overview",
+      },
+      {
+        name: "Add new",
+        url: "add-new",
       },
     ]
-  },
+  }
 ];
 
-
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
-  public title = 'clickyman-blog';
-  public opened: boolean;
+  private readonly treeControl;
+  private readonly treeFlattener;
+  private readonly dataSource;
+  private opened: boolean;
 
-  public _transformer = (node: FoodNode, level: number) => {
-    return {
-      expandable: !!node.children && node.children.length > 0,
-      name: node.name,
-      level: level,
-    };
-  }
-
-  public treeControl = new FlatTreeControl<ExampleFlatNode>(
-    node => node.level, node => node.expandable);
-
-  public treeFlattener = new MatTreeFlattener(
-    this._transformer, node => node.level, node => node.expandable, node => node.children);
-
-  public dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
-  constructor(private http: HttpClient, ) {
+  constructor() {
+    this.treeFlattener = new MatTreeFlattener(
+      this.transformer, node => node.level, node => node.expandable, node => node.children);
+    this.treeControl = new FlatTreeControl<FlatNode>(node => node.level, node => node.expandable);
+    this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
     this.dataSource.data = TREE_DATA;
   }
 
-  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+  hasChild = (_: number, node: FlatNode) => node.expandable;
 
-  callApi() {
-    this.http.get('http://www.mocky.io/v2/5d29fb823000006c005a40ca?mocky-delay=100ms')
-      .subscribe(data => {
-        console.log(data);
-        throw Error('Hihi');
-      });
+  private transformer = (node: MenuNode, level: number) => {
+    return {
+      expandable: !!node.children && node.children.length > 0,
+      name: node.name,
+      level,
+    };
   }
+
 }
