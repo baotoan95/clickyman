@@ -1,7 +1,7 @@
 import * as mqtt from "mqtt";
+import {MqttClient} from "mqtt";
 import {Injectable, Logger} from "@nestjs/common";
 import {POST_TOPIC} from "../../business/post";
-import {MqttClient} from "mqtt";
 import {BaseEvent} from "../../dto/event/base-event";
 
 export const USER_TOPIC = "USER_TOPIC";
@@ -20,7 +20,7 @@ export class MqService {
 		this.client.on("connect", () => {
 			this.logger.log("Connected to MQTT server successfully");
 		});
-		this.client.subscribe(`multicast://${POST_TOPIC}`, (err) => {
+		this.client.subscribe(`multicast://${POST_TOPIC}`, err => {
 			if (!err) {
 				this.logger.log(`Connect to ${POST_TOPIC} successfully`);
 			} else {

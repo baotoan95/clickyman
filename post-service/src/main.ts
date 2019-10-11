@@ -11,15 +11,16 @@ declare const module: any;
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule, {
 		cors: true,
-		logger: true,
 	});
 
-	app.useGlobalPipes(new ValidationPipe({
-		transform: true,
-		whitelist: true,
-		forbidNonWhitelisted: true,
-		forbidUnknownValues: true,
-	}));
+	app.useGlobalPipes(
+		new ValidationPipe({
+			transform: true,
+			whitelist: true,
+			forbidNonWhitelisted: true,
+			forbidUnknownValues: true,
+		}),
+	);
 	app.useGlobalFilters(new GlobalExceptionFilter());
 
 	app.use(helmet()); // 12 middleware security

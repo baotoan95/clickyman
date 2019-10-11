@@ -21,11 +21,17 @@ export class PaginationDto<T> {
 	@Type(_ => Number)
 	public totalPages: number;
 
-	constructor(data: T[], currentPage: number, totalItems: number, pageSize: number) {
+	constructor(
+		data: T[],
+		currentPage: number,
+		totalItems: number,
+		pageSize: number,
+	) {
 		this.data = data;
 		this.currentPage = currentPage;
 		this.pageSize = pageSize;
-		this.totalPages = pageSize && pageSize > 0 ? Math.ceil(totalItems / pageSize) : 1;
+		this.totalPages =
+			pageSize && pageSize > 0 ? Math.ceil(totalItems / pageSize) : 1;
 	}
 }
 

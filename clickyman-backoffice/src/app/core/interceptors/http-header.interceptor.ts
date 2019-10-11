@@ -12,7 +12,7 @@ export class HttpHeaderInterceptor implements HttpInterceptor {
     if (currentToken) {
       req = req.clone({
         setHeaders: {
-          Authorization: currentToken
+          Authorization: `${this.authService.tokenType} ${currentToken}`
         }
       });
     }

@@ -24,7 +24,7 @@ export class PostEventPayload implements Partial<IPost> {
 
 export class PostInteractionEvent extends BaseEvent {
 	topic: string = POST_TOPIC;
-	publishOptions = { qos: 0 as QoS };
+	publishOptions = {qos: 0 as QoS};
 
 	constructor(message: PostEvent) {
 		super(JSON.stringify(message));

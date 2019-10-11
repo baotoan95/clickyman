@@ -19,8 +19,11 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "moduleResolution" : "node",
+    "moduleResolution": "node",
     "watch": true
   },
-  "exclude": ["node_modules", "dist"]
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

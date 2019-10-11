@@ -3,11 +3,11 @@ import {TypeOrmModule, TypeOrmModuleOptions} from "@nestjs/typeorm";
 import {PostEntity} from "./entities/post.entity";
 import {PostController} from "./controller/post.controller";
 import {PostService} from "./services/post.service";
-import {PassportModule} from "@nestjs/passport";
-import {JwtModule, JwtModuleOptions} from "@nestjs/jwt";
 import {JwtStrategy} from "./config/jwt.strategy";
 import {EnvironmentService} from "./modules/environment/environment.service";
 import {EnvironmentModule} from "./modules/environment/environment.module";
+import {PassportModule} from "@nestjs/passport";
+import {JwtModule, JwtModuleOptions} from "@nestjs/jwt";
 import {MqModule} from "./modules/mq/mq.module";
 
 @Module({
@@ -15,7 +15,9 @@ import {MqModule} from "./modules/mq/mq.module";
 		EnvironmentModule,
 		TypeOrmModule.forRootAsync({
 			inject: [EnvironmentService],
-			useFactory: async (env: EnvironmentService): Promise<TypeOrmModuleOptions> => {
+			useFactory: async (
+				env: EnvironmentService,
+			): Promise<TypeOrmModuleOptions> => {
 				return {
 					type: env.ENVIRONMENT.DB_TYPE,
 					host: env.ENVIRONMENT.DB_HOST,
@@ -36,13 +38,13 @@ import {MqModule} from "./modules/mq/mq.module";
 				} as TypeOrmModuleOptions;
 			},
 		}),
-		TypeOrmModule.forFeature([
-			PostEntity,
-		]),
+		TypeOrmModule.forFeature([PostEntity]),
 		PassportModule.register({defaultStrategy: "jwt"}),
 		JwtModule.registerAsync({
 			inject: [EnvironmentService],
-			useFactory: async (env: EnvironmentService): Promise<JwtModuleOptions> => {
+			useFactory: async (
+				env: EnvironmentService,
+			): Promise<JwtModuleOptions> => {
 				return {
 					secret: env.ENVIRONMENT.PUBLIC_KEY,
 					signOptions: {expiresIn: env.ENVIRONMENT.TOKEN_EXPIRE},

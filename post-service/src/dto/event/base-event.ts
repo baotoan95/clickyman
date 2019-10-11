@@ -6,7 +6,6 @@ export abstract class BaseEvent {
 	public abstract publishOptions: IClientPublishOptions;
 
 	protected constructor(public message: string | Buffer) {
-
 	}
 }
 

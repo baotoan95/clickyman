@@ -1,8 +1,9 @@
 import {PostService} from "../services/post.service";
-import {Body, Controller, Delete, Get, Param, Post, Query, UseGuards} from "@nestjs/common";
+import {Body, Controller, Delete, Get, Param, Post, Query, UseGuards,} from "@nestjs/common";
 import {
 	CreatePostRequestBody,
-	DeletePostByIdRequest, GetPostByAuthorRequest,
+	DeletePostByIdRequest,
+	GetPostByAuthorRequest,
 	GetPostByIdRequest,
 	GetPostWithPaginationRequest,
 	PostDto,
@@ -13,9 +14,8 @@ import {PaginationDto} from "../dto/pagination.dto";
 @Controller("/posts")
 @UseGuards(AuthGuard())
 export class PostController {
-	constructor(
-		private readonly postService: PostService,
-	) {}
+	constructor(private readonly postService: PostService) {
+	}
 
 	@Post()
 	public createOne(@Body() postDto: CreatePostRequestBody): Promise<PostDto> {
@@ -23,7 +23,9 @@ export class PostController {
 	}
 
 	@Get(":id")
-	public fetchOne(@Param() req: GetPostByIdRequest): Promise<PostDto | undefined> {
+	public fetchOne(
+		@Param() req: GetPostByIdRequest,
+	): Promise<PostDto | undefined> {
 		return this.postService.fetchById(req);
 	}
 
@@ -33,7 +35,9 @@ export class PostController {
 	}
 
 	@Get()
-	public fetchPagination(@Query() pageReq: GetPostWithPaginationRequest): Promise<PaginationDto<PostDto>> {
+	public fetchPagination(
+		@Query() pageReq: GetPostWithPaginationRequest,
+	): Promise<PaginationDto<PostDto>> {
 		return this.postService.fetchWithPagination(pageReq);
 	}
 

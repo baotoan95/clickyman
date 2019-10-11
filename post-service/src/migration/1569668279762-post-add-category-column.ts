@@ -18,5 +18,4 @@ export class PostAddCategoryColumn1569668279762 implements MigrationInterface {
 	public async down(queryRunner: QueryRunner): Promise<any> {
 		await queryRunner.dropColumns(POST_TABLE_NAME, this.NEW_COLUMNS);
 	}
-
 }

@@ -46,7 +46,6 @@ export class GetPostByIdRequest implements Partial<IPost> {
 }
 
 export class DeletePostByIdRequest extends GetPostByIdRequest {
-
 }
 
 @Exclude()
