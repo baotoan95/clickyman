@@ -1,5 +1,5 @@
 import {BrowserModule} from "@angular/platform-browser";
-import {NgModule} from "@angular/core";
+import {ErrorHandler, NgModule} from "@angular/core";
 import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 
@@ -15,6 +15,7 @@ import {AngularFireModule} from "@angular/fire";
 import {AngularFireDatabaseModule} from "@angular/fire/database";
 import {AngularFirestoreModule} from "@angular/fire/firestore";
 import {AuthenticationModule} from "./modules/authentication/authentication.module";
+import {GlobalErrorHandler} from "./core/services/error.service";
 
 // required for AOT compilation
 export function HttpLoaderFactory(http: HttpClient) {
@@ -45,7 +46,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     AuthenticationModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

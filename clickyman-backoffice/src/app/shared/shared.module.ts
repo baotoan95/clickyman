@@ -9,11 +9,15 @@ import {
   MatToolbarModule,
   MatTreeModule
 } from "@angular/material";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TranslateModule} from "@ngx-translate/core";
 import {MatSortModule} from "@angular/material/sort";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatCardModule} from "@angular/material/card";
 
 const materialModules = [
   MatProgressSpinnerModule,
@@ -26,11 +30,16 @@ const materialModules = [
   MatTableModule,
   MatSortModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatSnackBarModule,
+  MatTooltipModule,
+  MatDialogModule,
+  MatCardModule,
 ];
 
 const commonModules = [
   FormsModule,
+  ReactiveFormsModule,
 ];
 
 @NgModule({

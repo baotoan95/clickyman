@@ -9,7 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
+import com.clickyman.handler.RestAuthenticationFailureHandler;
 import com.clickyman.services.UserService;
 
 @EnableWebSecurity
@@ -38,6 +40,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
+	}
+	
+	@Bean
+	public AuthenticationFailureHandler authenticationFailureHandler() {
+		return new RestAuthenticationFailureHandler();
 	}
 	
 	@Override

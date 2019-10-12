@@ -1,6 +1,8 @@
-import {Component} from "@angular/core";
+import {Component, ViewChild} from "@angular/core";
 import {FlatTreeControl} from "@angular/cdk/tree";
 import {MatTreeFlatDataSource, MatTreeFlattener} from "@angular/material";
+import {AuthenticationService} from "./core/services/authentication.service";
+import {MatSidenav} from "@angular/material/sidenav";
 
 interface MenuNode {
   name: string;
@@ -42,7 +44,11 @@ export class AppComponent {
   private readonly dataSource;
   private opened: boolean;
 
-  constructor() {
+  @ViewChild(MatSidenav, {static: false}) sidenav: MatSidenav;
+
+  constructor(
+    private readonly authService: AuthenticationService,
+  ) {
     this.treeFlattener = new MatTreeFlattener(
       this.transformer, node => node.level, node => node.expandable, node => node.children);
     this.treeControl = new FlatTreeControl<FlatNode>(node => node.level, node => node.expandable);
@@ -58,6 +64,10 @@ export class AppComponent {
       name: node.name,
       level,
     };
+  }
+
+  private isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
   }
 
 }

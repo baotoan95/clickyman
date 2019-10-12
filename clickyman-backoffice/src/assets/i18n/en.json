@@ -1,5 +1,11 @@
 {
-    "app": {
-        "welcome": "Welcome by ClickyMan blog"
+  "app": {
+    "welcome": "Welcome to ClickyMan blog",
+    "error": {
+      "dialog": {
+        "button": "Ok",
+        "title": "Error"
+      }
     }
+  }
 }

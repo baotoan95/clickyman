@@ -1,0 +1,28 @@
+.login-page {
+  height: calc(100vh - 200px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .mat-card-title {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+}
+
+.login-form {
+  max-width: 500px;
+  form {
+    display: flex;
+    flex-direction: column;
+    min-width: 500px;
+
+    .mat-form-field {
+      margin: .5rem 0;
+    }
+
+    button[type=submit] {
+      margin-top: 1rem;
+    }
+  }
+}

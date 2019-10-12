@@ -43,7 +43,13 @@ export class AuthenticationService {
       localStorage.setItem(JWT_TOKEN_KEY, JSON.stringify(tokenInfo));
       this.currentTokenSubject.next(tokenInfo);
       this.locationService.back();
+    } else {
+      console.log("Can not get response from request authentication");
     }
+  }
+
+  public isLoggedIn(): boolean {
+    return !!this.jwtAccessToken;
   }
 
   public logout(): void {

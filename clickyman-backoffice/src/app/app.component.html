@@ -3,7 +3,7 @@
   <mat-toolbar class="main-toolbar">
     <mat-toolbar-row>
       <span>Clickyman</span>
-      <button mat-button (click)="sidenav.toggle()">
+      <button mat-button (click)="sidenav.toggle()" *ngIf="isLoggedIn()">
         <mat-icon>list</mat-icon>
       </button>
       <div class="tools">
@@ -12,7 +12,7 @@
     </mat-toolbar-row>
   </mat-toolbar>
   <mat-sidenav-container class="clickyman" [hasBackdrop]="false">
-    <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="main-navigation">
+    <mat-sidenav mode="side" [(opened)]="opened" class="main-navigation" *ngIf="isLoggedIn()">
       <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
         <!-- This is the tree node template for leaf nodes -->
         <mat-tree-node class="menu-item {{(!node.level || node.level === 0) && 'menu-root-item'}}"

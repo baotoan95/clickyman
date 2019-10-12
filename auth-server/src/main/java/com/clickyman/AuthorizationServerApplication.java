@@ -1,5 +1,6 @@
 package com.clickyman;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +18,11 @@ public class AuthorizationServerApplication {
 	@Bean
 	public ModelMapper modelMapper() {
 	    return new ModelMapper();
+	}
+	
+	@Bean
+	public ObjectMapper objectMapper() {
+		return new ObjectMapper();
 	}
 
 }

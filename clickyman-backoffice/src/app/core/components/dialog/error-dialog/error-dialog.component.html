@@ -1,0 +1,11 @@
+<div class="error-dialog">
+  <div class="title">
+    {{"app.error.dialog.title" | translate}}
+  </div>
+  <div class="message">
+    {{data.message}}
+  </div>
+  <div class="actions">
+    <button mat-raised-button (click)="close()">{{data.textBtn || "app.error.dialog.button" | translate}}</button>
+  </div>
+</div>
