@@ -1,6 +1,8 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {AuthenticationService} from "../../../core/services/authentication.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: "app-login",
@@ -9,10 +11,18 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
     "./login.component.scss"
   ]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   private loginForm: FormGroup;
 
-  constructor(private readonly authService: AuthenticationService) {
+  constructor(
+    private readonly authService: AuthenticationService,
+    private readonly router: Router,
+    private readonly activateRoute: ActivatedRoute,
+  ) {
+    // TODO: Redirect while user logged in
+  }
+
+  public ngOnInit(): void {
     this.loginForm = this.createFormGroup();
   }
 
@@ -23,11 +33,18 @@ export class LoginComponent {
     });
   }
 
-  private async onSubmit(): Promise<void> {
+  private async onSubmit(event): Promise<void> {
+    event.preventDefault();
+    event.stopPropagation();
     if (this.loginForm.valid) {
       const username = this.loginForm.value.username;
       const password = this.loginForm.value.password;
-      await this.authService.login(username, password);
+      this.authService.login(username, password).pipe(first()).subscribe(async userInfo => {
+        console.log(userInfo);
+        await this.router.navigate([this.activateRoute.snapshot.queryParams.returnUrl || "/"]);
+      }, err => {
+        console.log(err);
+      });
     }
   }
 }

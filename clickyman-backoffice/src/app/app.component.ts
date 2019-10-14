@@ -63,6 +63,7 @@ export class AppComponent {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
       level,
+      url: node.url,
     };
   }
 

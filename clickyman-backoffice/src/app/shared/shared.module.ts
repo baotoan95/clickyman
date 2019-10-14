@@ -18,6 +18,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatCardModule} from "@angular/material/card";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 const materialModules = [
   MatProgressSpinnerModule,
@@ -35,6 +36,7 @@ const materialModules = [
   MatTooltipModule,
   MatDialogModule,
   MatCardModule,
+  MatPaginatorModule,
 ];
 
 const commonModules = [

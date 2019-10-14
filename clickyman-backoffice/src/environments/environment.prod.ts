@@ -1,6 +1,10 @@
 export const environment = {
   production: true,
   baseUrl: "",
+  backendBaseUrl: {
+    authentication: "http://localhost:9000/",
+    post: "http://localhost:3000",
+  },
   firebase: {
     apiKey: "AIzaSyAu__-GfdM6UOUHnqFbKigB_y2cpunlfM0",
     authDomain: "clickyman-pet.firebaseapp.com",

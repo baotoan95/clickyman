@@ -4,7 +4,7 @@
       {{"app.form.login.title" | translate}}
     </mat-card-title>
     <mat-card-content>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <form (ngSubmit)="onSubmit($event)" [formGroup]="loginForm">
         <mat-form-field>
           <mat-label>{{"app.form.login.username" | translate}}</mat-label>
           <input matInput placeholder="{{'app.form.login.username' | translate}}" formControlName="username">
@@ -15,7 +15,7 @@
 
         <mat-form-field>
           <mat-label>{{"app.form.login.password" | translate}}</mat-label>
-          <input matInput placeholder="{{'app.form.login.password' | translate}}" formControlName="password">
+          <input matInput type="password" placeholder="{{'app.form.login.password' | translate}}" formControlName="password">
           <mat-error *ngIf="loginForm.get('password').hasError('required')">
             {{"app.form.login.error.username.required" | translate}}
           </mat-error>

@@ -4,6 +4,11 @@ import {Observable, throwError} from "rxjs";
 import {AuthenticationService} from "../services/authentication.service";
 import {catchError} from "rxjs/operators";
 import {NotificationService} from "../services/notification.service";
+import {environment} from "../../../environments/environment";
+
+const EXCLUDE_URL_400: string[] = [
+  `${environment.backendBaseUrl.authentication}oauth/token`
+];
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
@@ -17,18 +22,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       if (err.status === 401) {
         this.authService.logout();
         location.reload();
-      } else if (err.status === 400) {
-        console.log(err);
-        const snackBar = this.notificationService.pushSnackBar({
+      } else if (err.status === 400 && !this.isExclude(err.url, EXCLUDE_URL_400)) {
+        this.notificationService.pushSnackBar({
           message: "Bad request"
-        });
-        snackBar.then(snackBarRef => {
-          snackBarRef.afterDismissed().subscribe(() => {
-            this.notificationService.pushDialog({
-              message: "Bad request"
-            });
-          });
-        });
+        }).then();
       }
 
       console.log(err);
@@ -38,4 +35,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     }));
   }
 
+  private isExclude(url: string, excludeMatches: string[]): boolean {
+    return excludeMatches.includes(url);
+  }
 }

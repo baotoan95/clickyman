@@ -15,11 +15,11 @@ export class NotificationService {
   constructor(
     private readonly snackBar: MatSnackBar,
     private readonly dialog: MatDialog,
-    private readonly transalator: TranslateService,
+    private readonly translator: TranslateService,
   ) {}
 
   public async pushSnackBar(notification: INotificationConfig): Promise<MatSnackBarRef<SimpleSnackBar>> {
-    const defaultTextButton: string = await this.transalator.get("app.common.ok").toPromise();
+    const defaultTextButton: string = await this.translator.get("app.common.ok").toPromise();
     notification = {
       config: {
         duration: 3 * 1000, // Default duration (3s)

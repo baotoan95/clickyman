@@ -3,6 +3,7 @@ import {MatSort, MatTableDataSource} from "@angular/material";
 import {PostModel} from "../../../../shared/models/post.model";
 import {HttpService} from "../../../../core/services/http.service";
 import {DISPLAY_DATE_FORMAT} from "../../../../shared/constants/date.constant";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: "app-post-overview",
@@ -17,6 +18,7 @@ export class OverviewComponent implements OnInit {
   private dataSource: MatTableDataSource<PostModel>;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private readonly http: HttpService) {
   }
@@ -26,5 +28,6 @@ export class OverviewComponent implements OnInit {
     this.displayedColumns = ["title", "author", "category", "publishedDate", "createdDate", "updatedDate"];
     this.dataSource = new MatTableDataSource<PostModel>(postPage.data);
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 }

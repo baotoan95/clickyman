@@ -10,7 +10,6 @@ import {CommonModule} from "@angular/common";
 import {HttpService} from "./services/http.service";
 import {LocalStorageService} from "./services/localstorage.service";
 import {GlobalErrorHandler} from "./services/error.service";
-import {AuthenticationService} from "./services/authentication.service";
 import {HttpHeaderInterceptor} from "./interceptors/http-header.interceptor";
 import {HttpErrorInterceptor} from "./interceptors/http-error.interceptor";
 import {ErrorDialogComponent} from "./components/dialog/error-dialog/error-dialog.component";
@@ -53,7 +52,6 @@ import {NotificationService} from "./services/notification.service";
       provide: ErrorHandler,
       useClass: GlobalErrorHandler
     },
-    AuthenticationService,
     NotificationService,
   ],
   exports: [

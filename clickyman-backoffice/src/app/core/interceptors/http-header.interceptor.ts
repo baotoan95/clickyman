@@ -8,7 +8,7 @@ export class HttpHeaderInterceptor implements HttpInterceptor {
   constructor(private readonly authService: AuthenticationService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const currentToken = this.authService.jwtAccessToken;
+    const currentToken = this.authService.accessToken;
     if (currentToken) {
       req = req.clone({
         setHeaders: {

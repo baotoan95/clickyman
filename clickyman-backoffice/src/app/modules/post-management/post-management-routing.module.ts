@@ -3,6 +3,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {CoreModule} from "../../core/core.module";
 import {OverviewComponent} from "./pages/overview/overview.component";
 import {PostManagementComponent} from "./pages/home/post-management.component";
+import {PostFormComponent} from "./pages/post-form/post-form.component";
 
 const routes: Routes = [
   {
@@ -12,6 +13,11 @@ const routes: Routes = [
       {
         path: "",
         component: OverviewComponent,
+        pathMatch: "full"
+      },
+      {
+        path: "add-new",
+        component: PostFormComponent,
         pathMatch: "full"
       }
     ]
