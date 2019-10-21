@@ -1,8 +1,9 @@
 import {Injectable} from "@angular/core";
 import {BehaviorSubject, Observable} from "rxjs";
 import {HttpService, IToken, JWT_TOKEN_KEY, JwtToken} from "./http.service";
-import {map} from "rxjs/operators";
+import {tap} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
+import {HttpRequest} from "@angular/common/http";
 
 @Injectable({providedIn: "root"})
 export class AuthenticationService {
@@ -25,7 +26,7 @@ export class AuthenticationService {
   }
 
   public get tokenType(): string {
-    return this.currentTokenSubject.value && this.currentTokenSubject.value.token_type;;
+    return this.currentTokenSubject.value && this.currentTokenSubject.value.token_type;
   }
 
   public login(username: string, password: string): Observable<IToken> {
@@ -33,18 +34,40 @@ export class AuthenticationService {
     credential.append("username", username);
     credential.append("password", password);
     credential.append("grant_type", "password");
-    const headers = {
+    return this.hitAuthenticationServer(credential);
+  }
+
+  public refreshAccessToken(): Observable<IToken> {
+    const data = new URLSearchParams();
+    data.append("grant_type", "refresh_token");
+    data.append("refresh_token", this.refreshToken);
+    return this.hitAuthenticationServer(data);
+  }
+
+  private hitAuthenticationServer(params: URLSearchParams): Observable<IToken> {
+    return this.httpService.req.post(
+      `${environment.backendUrls.authentication.baseUrl}${environment.backendUrls.authentication.refresh}`,
+      params.toString(), this.basicAuthenticationHeader())
+      .pipe<IToken>(tap(tokenInfo => {
+        localStorage.setItem(JWT_TOKEN_KEY, JSON.stringify(tokenInfo));
+        this.currentTokenSubject.next(tokenInfo);
+        return tokenInfo;
+      }));
+  }
+
+  private basicAuthenticationHeader(): {"Content-Type": string, Authorization: string} {
+    return {
       "Content-Type": "application/x-www-form-urlencoded",
       Authorization: `Basic ${btoa("clientID123:password")}`
     };
-    return this.httpService.req.post(`${environment.backendBaseUrl.authentication}oauth/token`, credential.toString(), headers)
-      .pipe<IToken>(
-        map(tokenInfo => {
-          localStorage.setItem(JWT_TOKEN_KEY, JSON.stringify(tokenInfo));
-          this.currentTokenSubject.next(tokenInfo);
-          return tokenInfo;
-        })
-      );
+  }
+
+  public setAuthenticationHeader(req: HttpRequest<any>): HttpRequest<any> {
+    return req.clone({
+      setHeaders: {
+        Authorization: `${this.tokenType} ${this.accessToken}`
+      }
+    });
   }
 
   public isLoggedIn(): boolean {

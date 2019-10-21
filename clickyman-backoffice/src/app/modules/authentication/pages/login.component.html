@@ -4,6 +4,7 @@
       {{"app.form.login.title" | translate}}
     </mat-card-title>
     <mat-card-content>
+      <app-message-box [type]="messageType.ERROR" [message]="errorMessage" (onClose)="onCloseMessage($event)"></app-message-box>
       <form (ngSubmit)="onSubmit($event)" [formGroup]="loginForm">
         <mat-form-field>
           <mat-label>{{"app.form.login.username" | translate}}</mat-label>

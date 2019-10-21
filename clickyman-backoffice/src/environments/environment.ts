@@ -5,9 +5,16 @@
 export const environment = {
   production: false,
   baseUrl: "",
-  backendBaseUrl: {
-    authentication: "http://localhost:9000/",
-    post: "http://localhost:3000",
+  backendUrls: {
+    authentication: {
+      baseUrl: "http://localhost:9000/",
+      login: "oauth/token",
+      refresh: "oauth/token"
+    },
+    post: {
+      baseUrl: "http://localhost:3000",
+      fetchAll: "/"
+    },
   },
   firebase: {
     apiKey: "AIzaSyAu__-GfdM6UOUHnqFbKigB_y2cpunlfM0",

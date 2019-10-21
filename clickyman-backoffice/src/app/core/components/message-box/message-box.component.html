@@ -1,0 +1,4 @@
+<section [class]="type" *ngIf="message && !isClosed">
+  <div class="message">{{message | translate}}</div>
+  <mat-icon class="btn-close" (click)="close()">cancel</mat-icon>
+</section>

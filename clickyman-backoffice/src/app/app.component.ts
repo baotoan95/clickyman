@@ -23,11 +23,11 @@ const TREE_DATA: MenuNode[] = [
     children: [
       {
         name: "Overview",
-        url: "overview",
+        url: "/post-management",
       },
       {
         name: "Add new",
-        url: "add-new",
+        url: "/post-management/add-new",
       },
     ]
   }

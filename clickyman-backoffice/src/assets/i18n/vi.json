@@ -22,7 +22,8 @@
           },
           "password": {
             "required": "Vui lòng nhập mật khẩu"
-          }
+          },
+          "login-failed": "Tên đăng nhập hoặc mật khẩu không đúng, vui lòng nhập lại"
         }
       }
     }

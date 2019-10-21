@@ -9,21 +9,20 @@
       <div class="tools">
         <mat-icon>notification_none</mat-icon>
       </div>
-      <a [routerLink]="'add-new'">Add New</a>
     </mat-toolbar-row>
   </mat-toolbar>
   <mat-sidenav-container class="clickyman" [hasBackdrop]="false">
     <mat-sidenav mode="side" [(opened)]="opened" class="main-navigation" *ngIf="isLoggedIn()">
       <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
         <!-- This is the tree node template for leaf nodes -->
-        <mat-tree-node class="menu-item {{(!node.level || node.level === 0) && 'menu-root-item'}}"
-                       *matTreeNodeDef="let node" matTreeNodePadding matTreeNodeToggle>
-          <a [routerLink]="node.url">{{node.name}}</a>
+        <mat-tree-node class="menu-item {{(!node.level || node.level === 0) && 'menu-root-item'}}" [routerLinkActiveOptions]="{exact: true}"
+                       [routerLink]="node.url" routerLinkActive="active" *matTreeNodeDef="let node" matTreeNodePadding matTreeNodeToggle>
+          {{node.name}}
         </mat-tree-node>
         <!-- This is the tree node template for expandable nodes -->
-        <mat-tree-node class="menu-item {{(!node.level || node.level === 0) && 'menu-root-item'}}"
-                       *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding matTreeNodeToggle>
-          <a [routerLink]="node.url">{{node.name}}</a>
+        <mat-tree-node class="menu-item {{(!node.level || node.level === 0) && 'menu-root-item'}}" [routerLinkActiveOptions]="{exact: true}"
+                       [routerLink]="node.url" routerLinkActive="active" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding matTreeNodeToggle>
+          {{node.name}}
           <mat-icon class="menu-dropdown-icon">
             {{treeControl.isExpanded(node) ? "expand_more" : "chevron_right"}}
           </mat-icon>

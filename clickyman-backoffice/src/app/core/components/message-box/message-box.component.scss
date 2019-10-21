@@ -1,0 +1,37 @@
+.message-box {
+  padding: 1rem 0.5rem;
+  background: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 4px;
+}
+
+.error-message {
+  @extend .message-box;
+  background: #EC5147;
+}
+
+.success-message {
+  @extend .message-box;
+  background: #64BB6F;
+}
+
+.warning-message {
+  @extend .message-box;
+  background: #F5A742;
+}
+
+.info-message {
+  @extend .message-box;
+  background: #43A6F4;
+}
+
+.message {
+  flex-grow: 1;
+}
+
+.btn-close {
+  cursor: pointer;
+}

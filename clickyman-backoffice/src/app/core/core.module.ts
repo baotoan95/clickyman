@@ -14,6 +14,7 @@ import {HttpHeaderInterceptor} from "./interceptors/http-header.interceptor";
 import {HttpErrorInterceptor} from "./interceptors/http-error.interceptor";
 import {ErrorDialogComponent} from "./components/dialog/error-dialog/error-dialog.component";
 import {NotificationService} from "./services/notification.service";
+import {MessageBoxComponent} from "./components/message-box/message-box.component";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {NotificationService} from "./services/notification.service";
     LoaderComponent,
     LoadPlaceholderComponent,
     ErrorDialogComponent,
+    MessageBoxComponent,
   ],
   entryComponents: [
     ErrorDialogComponent
@@ -56,7 +58,8 @@ import {NotificationService} from "./services/notification.service";
   ],
   exports: [
     CommonModule,
-    LoaderComponent
+    LoaderComponent,
+    MessageBoxComponent
   ]
 })
 export class CoreModule {

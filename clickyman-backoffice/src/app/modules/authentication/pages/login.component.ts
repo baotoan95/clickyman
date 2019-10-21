@@ -3,6 +3,7 @@ import {AuthenticationService} from "../../../core/services/authentication.servi
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {first} from "rxjs/operators";
+import {MessageType} from "../../../core/components/message-box/message-box.component";
 
 @Component({
   selector: "app-login",
@@ -13,6 +14,8 @@ import {first} from "rxjs/operators";
 })
 export class LoginComponent implements OnInit {
   private loginForm: FormGroup;
+  private errorMessage: string;
+  private messageType = MessageType;
 
   constructor(
     private readonly authService: AuthenticationService,
@@ -39,12 +42,18 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const username = this.loginForm.value.username;
       const password = this.loginForm.value.password;
-      this.authService.login(username, password).pipe(first()).subscribe(async userInfo => {
-        console.log(userInfo);
+      this.authService.login(username, password).pipe(first()).subscribe(async _userInfo => {
+        this.errorMessage = "";
         await this.router.navigate([this.activateRoute.snapshot.queryParams.returnUrl || "/"]);
-      }, err => {
-        console.log(err);
+      }, _err => {
+        this.errorMessage = "app.form.login.error.login-failed";
       });
+    }
+  }
+
+  private onCloseMessage(e) {
+    if (e) {
+      this.errorMessage = "";
     }
   }
 }

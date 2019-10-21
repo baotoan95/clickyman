@@ -10,7 +10,8 @@ const routes: Routes = [
   },
   {
     path: "home",
-    loadChildren: "./modules/home/home.module#HomeModule"
+    loadChildren: "./modules/home/home.module#HomeModule",
+    canActivate: [AuthGuard]
   },
   {
     path: "post-management",
@@ -19,12 +20,12 @@ const routes: Routes = [
   },
   {
     path: "**",
-    redirectTo: "/post-management",
+    redirectTo: "/home",
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: "enabled", useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
